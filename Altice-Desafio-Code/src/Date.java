@@ -2,6 +2,9 @@ import java.util.Calendar;
 
 public class Date {
 
+    public Date(long timeStamp) {
+    }
+
     public static Boolean isWeekend(ChargingRequest request)
     {
         Calendar calendar = Calendar.getInstance();

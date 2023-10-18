@@ -2,7 +2,7 @@ import java.util.UUID;
 
 public class ChargingRequest {
     private UUID requestId;
-    private long timeStamp; // data da realização da chamada
+    private long timeStamp; // data da realização da requisção
     private ServiceType service; // A ou B
     private boolean roaming; // true ou false
     private String msisdn; // numero de tel
