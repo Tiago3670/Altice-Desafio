@@ -1,71 +1,53 @@
 import java.io.IOException;
+import java.util.Scanner;
 import java.util.UUID;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         char op = 0;
-        TarifarioAlfa1 tarifarioA1 = new TarifarioAlfa1();
-
-        /*ChargingRequest request = new ChargingRequest(1, System.currentTimeMillis(), ServiceType.A, false, "123456789", 5);
-
-
-        tarifarioA1.subscrever();
-     //   ChargingReply resquestReply=
-
-        if (tarifarioA1.isElegivel(request)) {
-            double custo = tarifarioA1.calcularCusto(request);
-
-            System.out.println("Charging Request: " + request.getRequestId());
-            System.out.println("Tarifario: Alfa1");
-            System.out.println("Custo: " + custo+ " €");
-        } else {
-            System.out.println("Solicitação não elegível para o tarifário Alfa1.");
-        }*/
+        String msisdn;
+        String rsu;
+        Scanner sc= new Scanner(System.in);
+        ChargingReply reply;
 
         do{
             System.out.println("------------------Bem vindo-------------");
-            System.out.println("(1) - Visualizar/Subscrever Serviços");
-            System.out.println("(2) - Charging Request");
+            System.out.println("(1) - Charging Request");
             System.out.println("(9) - Sair");
             op = (char) System.in.read();
             System.in.read();
 
-            if(op=='1') {
-                char op2;
-                    System.out.println("(1) - Subscrever Serviço A ");
-                    System.out.println("(2) - Subscrever Serviço B ");
-                    System.out.println("(9) - Voltar");
-                    op2 = (char) System.in.read();
-                    System.in.read();
-
-                    if (op2 == '1') {
-                        char tariffOp;
-                        System.out.println("Tarifários do serviço A");
-                        System.out.println("(1) - Subscrever Alpha 1 ");
-                        System.out.println("(2) - Subscrever Alpha 2 ");
-                        System.out.println("(3) - Subscrever Alpha 3 ");
-                        tariffOp = (char) System.in.read();
-                        System.in.read();
-                        if (tariffOp == '1') {
-                            //tarifarioA3.retirarSubscricao();
-                            //tarifarioA2.retirarSubscricao();
-                            tarifarioA1.subscrever();
-                        } else if (tariffOp == '2') {
-                            tarifarioA1.retirarSubscricao(); //assumindo que só pode ter um tarifario
-                            //tarifarioA3.retirarSubscricao();
-                            // tarifarioA2.subscrever();
-                        } else if (tariffOp == '3') {
-                            // tarifarioA3.subscrever();
-                            tarifarioA1.retirarSubscricao();
-                            //tarifarioA2.retirarSubscricao();
-                        }
-
-                    }
-
-            } else if (op=='2') {
+             if (op=='1') {
+                 boolean done = false;
+                 char serv;
+                 ServiceType serviceOp = null;
                 UUID id = UUID.randomUUID();
-                ChargingRequest request = new ChargingRequest(id, System.currentTimeMillis(), ServiceType.A, false, "934567891", 5);
 
+                do{
+                    System.out.println("Qual Serviço A ou B");
+                    serv = (char) System.in.read();
+                    System.in.read();
+                    if(serv=='A')
+                    {
+                        serviceOp=ServiceType.A;
+                        done=true;
+                    }
+                    else if (serv=='B'){
+                        serviceOp=ServiceType.B;
+                        done=true;
+                    }
+                }while (done != true );
+
+                 System.out.println("MSISDN:");
+                 msisdn = sc.nextLine();
+                 System.out.println(msisdn);
+
+                 System.out.println("Requested Service Units(min):");
+                 rsu = sc.nextLine();
+                 System.out.println(rsu);
+                 ChargingRequest request = new ChargingRequest(id, System.currentTimeMillis(), serviceOp, false, msisdn, Integer.valueOf(rsu));
+                 reply=Central.setRequest(request);
+                 System.out.println(reply.getResult());
             }
 
         }while (op!='9');

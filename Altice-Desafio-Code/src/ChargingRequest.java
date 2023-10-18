@@ -6,9 +6,9 @@ public class ChargingRequest {
     private ServiceType service; // A ou B
     private boolean roaming; // true ou false
     private String msisdn; // numero de tel
-    private int rsu; // asummindo que RSU é os minutos da chamada
+    private double rsu; // asummindo que RSU é os minutos da chamada
 
-    public ChargingRequest(UUID requestId, long timeStamp, ServiceType service, boolean roaming, String msisdn, int rsu) {
+    public ChargingRequest(UUID requestId, long timeStamp, ServiceType service, boolean roaming, String msisdn, double rsu) {
         this.requestId = requestId;
         this.timeStamp = timeStamp;
         this.service = service;
@@ -16,6 +16,8 @@ public class ChargingRequest {
         this.msisdn = msisdn;
         this.rsu = rsu;
     }
+
+
 
     public UUID getRequestId() {
         return requestId;
@@ -37,7 +39,7 @@ public class ChargingRequest {
         return msisdn;
     }
 
-    public int getRsu() {
+    public double getRsu() {
         return rsu;
     }
 }

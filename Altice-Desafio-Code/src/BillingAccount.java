@@ -1,22 +1,22 @@
 import java.sql.Time;
 
 public class BillingAccount {
-    private String msisdn;
-    private double bucket1;
-    private double bucket2;
-    private double bucket3;
-    private int counterA;
-    private int counterB;
-    private int counterC;
-    private Time counterD;
-    private String tarifarioServicoA;
-    private String tarifarioServicoB;
+    private static String msisdn;
+    private static double bucketA; // centimos
+    private static double bucketB; // centimos
+    private static double bucketC; // centimos
+    private static int counterA;
+    private static int counterB;
+    private static int counterC;
+    private static Time counterD;
+    private static String tarifarioServicoA;
+    private static String tarifarioServicoB;
 
-    public BillingAccount(String msisdn, double bucket1, double bucket2, double bucket3, int counterA, int counterB, int counterC, Time counterD, String tarifarioServicoA, String tarifarioServicoB) {
+    public BillingAccount(String msisdn, double bucketA, double bucketB, double bucketC, int counterA, int counterB, int counterC, Time counterD, String tarifarioServicoA, String tarifarioServicoB) {
         this.msisdn = msisdn;
-        this.bucket1 = bucket1;
-        this.bucket2 = bucket2;
-        this.bucket3 = bucket3;
+        this.bucketA = bucketA;
+        this.bucketB = bucketB;
+        this.bucketC = bucketC;
         this.counterA = counterA;
         this.counterB = counterB;
         this.counterC = counterC;
@@ -26,34 +26,80 @@ public class BillingAccount {
     }
 
 
-    public String getMsisdn() {
+    public static String getMsisdn() {
         return msisdn;
     }
 
-    public double getBucket1() {
-        return bucket1;
+    public static double getBucketA() {
+        return bucketA;
+    }
+    public static String subtractBucketA(double custo) {
+        custo=custo*100; // passar para centimos
+
+        if(bucketA-custo<0)
+         {
+             return "CreditLimitReached";         }
+         else {
+             bucketA = bucketA - custo;
+             return "OK";
+         }
+    }
+    public static void addBucketA(double bonus) {
+        bonus=bonus*100; // passar para centimos
+        bucketA=bucketA-bonus;
     }
 
-    public double getBucket2() {
-        return bucket2;
+    public static double getBucketB() {
+        return bucketB;
+    }
+    public static String subtractBucketB(double custo) {
+        custo=custo*100; // passar para centimos
+        if(bucketB-custo<0)
+        {
+            return "CreditLimitReached";
+        }
+        else {
+            bucketB = bucketB - custo;
+            return "OK";
+        }
+    }
+    public static void addbucketB(double bonus) {
+        bonus=bonus*100; // passar para centimos
+
+        bucketB=bucketB-bonus;
+    }
+    public static double getBucketC() {
+        return bucketC;
     }
 
-    public double getBucket3() {
-        return bucket3;
+    public static String subtractBucketC(double custo) {
+        custo=custo*100; // passar para centimos
+        if(bucketC-custo<0)
+        {
+            return "CreditLimitReached";        }
+        else {
+            bucketC = bucketC - custo;
+            return "OK";
+        }
+    }
+    public static void addBucketC(double bonus) {
+        bonus=bonus*100; // passar para centimos
+
+        bucketC=bucketC-bonus;
     }
 
-    public int getCounterA() {
+    public static int getCounterA() {
         return counterA;
     }
 
-    public int getCounterB() {
+    public static int getCounterB() {
         return counterB;
     }
 
-    public int getCounterC() {
+    public static int getCounterC() {
         return counterC;
     }
-    public Time getCounterD() {
+    public static Time getCounterD() {
         return counterD;
     }
 
