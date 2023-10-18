@@ -1,14 +1,14 @@
-import java.sql.Time;
+import java.util.UUID;
 
 public class ChargingRequest {
-    private int requestId;
-    private Time timeStamp;
-    private ServiceType service;
-    private boolean roaming;
-    private String msisdn;
-    private int rsu;
+    private UUID requestId;
+    private long timeStamp; // data da realização da chamada
+    private ServiceType service; // A ou B
+    private boolean roaming; // true ou false
+    private String msisdn; // numero de tel
+    private int rsu; // asummindo que RSU é os minutos da chamada
 
-    public ChargingRequest(int requestId, Time timeStamp, ServiceType service, boolean roaming, String msisdn, int rsu) {
+    public ChargingRequest(UUID requestId, long timeStamp, ServiceType service, boolean roaming, String msisdn, int rsu) {
         this.requestId = requestId;
         this.timeStamp = timeStamp;
         this.service = service;
@@ -17,11 +17,11 @@ public class ChargingRequest {
         this.rsu = rsu;
     }
 
-    public int getRequestId() {
+    public UUID getRequestId() {
         return requestId;
     }
 
-    public Time getTimeStamp() {
+    public long getTimeStamp() {
         return timeStamp;
     }
 
