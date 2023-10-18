@@ -20,40 +20,38 @@ public class TarifarioServicoA {
         ChargingReply reply = null;
         if(Date.isWeekend(request)) // fim de semana (Apha 1 não pode ser usado)
         {
-            if(request.isRoaming())
+            if(request.isRoaming() && BillingAccount.getBucketC()>1000)// faz Alpha3
             {
                 BillingAccount.setCounterC();
-                if(BillingAccount.getBucketC()>1000) // faz Alpha3
-                {
-
-                }
+                CDR.setTariffId(Alpha3.getId());
+                reply=Alpha3.calcularCustoAlpha3(request);
             }
-            else if(!request.isRoaming())
+            else if(!request.isRoaming() && BillingAccount.getBucketB()>1000)// faz Alpha2
             {
-                if (BillingAccount.getBucketB()>1000) // faz Alpha2
-                {
-
-                }
+                CDR.setTariffId(Alpha2.getId());
+                reply=Alpha2.calcularCustoAlpha2(request);
             }
         } else if (!Date.isWeekend(request)) // dia de semana
         {
             if(BillingAccount.getCounterA()<100)   //Faz alpha1
             {
+                CDR.setTariffId(Alpha1.getId());
                 reply=Alpha1.calcularCustoAlpha1(request);
-
-            } else if (BillingAccount.getBucketB()>1000)  //faz alpha2
+            } else if (BillingAccount.getBucketB()>1000 && !request.isRoaming())  //faz alpha2
             {
-
-            } else if (BillingAccount.getBucketC()>1000)  //faz alpha3
+                CDR.setTariffId(Alpha2.getId());
+                reply=Alpha2.calcularCustoAlpha2(request);
+            } else if (BillingAccount.getBucketC()>1000 && request.isRoaming())  //faz alpha3
             {
-
+                BillingAccount.setCounterC();
+                CDR.setTariffId(Alpha3.getId());
+                reply=Alpha3.calcularCustoAlpha3(request);
             }
         }
         if(reply!=null)
         {
             BillingAccount.setCounterA(reply.getGSU());
         }
-        System.out.println("olha"+reply.getMsisdn());
         Central.saveRequest(reply);
         return reply;
     }

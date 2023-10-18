@@ -34,7 +34,6 @@ public class Central { // classe encarregue por decicidar qual tarifario vai ser
     }
 
     public static void saveRequest(ChargingReply reply) {
-        System.out.println("fuck "+reply.getMsisdn());
         replyList.add(reply);
     }
 }

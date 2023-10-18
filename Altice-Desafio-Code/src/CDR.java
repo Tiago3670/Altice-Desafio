@@ -18,21 +18,7 @@ public class CDR {
     private static int counterC;
     private static Time counterD;
 
-    /*public CDR(Time timeStamp, String msisdn, ServiceType service, ChargingRequest ChargingRequest ){ //, ChargingReply ChargingReply, int bucketA, int bucketB,int bucketC,String tariffId,int counterA,int counterB,int counterC,Time counterD) {
-        this.timeStamp = timeStamp;
-        this.msisdn = msisdn;
-        this.service = service;
-        this.ChargingRequest=ChargingRequest;
-        /*this.ChargingReply=ChargingReply;
-        this.tariffId = tariffId;
-        this.bucketA=bucketA;
-        this.bucketB=bucketB;
-        this.bucketC=bucketC;
-        this.counterA=counterA;
-        this.counterB=counterB;
-        this.counterC=counterC;
-        this.counterD=counterD;
-    }*/
+
 
     public Time getTimeStamp() {
         return timeStamp;

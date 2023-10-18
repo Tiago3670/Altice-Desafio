@@ -36,4 +36,8 @@ public class ChargingReply {
     public double getGSU() {
         return gsu;
     }
+    public double getCusto() {
+        return custo;
+    }
+
 }

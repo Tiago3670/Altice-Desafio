@@ -12,9 +12,22 @@ public class Date {
         calendar.setTimeInMillis(request.getTimeStamp());
         if (dayOfWeek >= Calendar.MONDAY && dayOfWeek <= Calendar.FRIDAY) {
 
-            return false;  //dia da semana
+            return true;  //dia da semana
         } else {
             return true;  //fim de semana
+        }
+    }
+    public static Boolean isNight(ChargingRequest request)
+    {
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR);
+        calendar.setTimeInMillis(request.getTimeStamp());
+        System.out.println("hora:"+hour);
+        if (hour >= 8 || hour < 6) {
+
+            return true; //se for noite
+        } else {
+            return false;//se for dia
         }
     }
 

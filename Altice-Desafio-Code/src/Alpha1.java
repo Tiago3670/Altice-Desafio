@@ -1,10 +1,14 @@
 public class Alpha1 {
     ServiceType servico;
-    int id;
+    static int id;
     Alpha1 (int id,ServiceType servico)
     {
         this.id=id;
         this.servico=servico;
+    }
+
+    public static String getId() {
+        return  Integer.toString(id) ;
     }
 
     public static  ChargingReply calcularCustoAlpha1(ChargingRequest request) {
@@ -12,6 +16,7 @@ public class Alpha1 {
         double gsu=0;
         double custoTotal=0;
         boolean bucketA=false,bucketB=false, bucketC=false;
+        System.out.println("Tarifario Alpha1");
 
             if(BillingAccount.getCounterA()<100)
             {
