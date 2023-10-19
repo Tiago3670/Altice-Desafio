@@ -4,16 +4,12 @@ public class CDR {
     private static Time timeStamp;
     private static String msisdn;
     private static ServiceType service;
-    private String transactionType; // Pode ser "Charging Request" ou "Charging Reply"
-    private String bucketsAndValues; // Uma representação dos buckets e valores relevantes
-    private String countersAndValues; // Uma representação dos contadores e valores relevantes
     private static String tariffId;
-    private static ChargingRequest ChargingRequest;
     private static ChargingReply ChargingReply;
     private static double bucketA;
     private static double bucketB;
     private static double bucketC;
-    private static int counterA;
+    private static double counterA;
     private static int counterB;
     private static int counterC;
     private static Time counterD;
@@ -80,32 +76,36 @@ public class CDR {
         return counterA;
     }
 
-    public static void setCounterA(double counterA) {
-        counterA = counterA;
+    public static void setCounterA(double _counterA) {
+        counterA = _counterA;
     }
 
     public static int getCounterB() {
         return counterB;
     }
 
-    public static void setCounterB(int counterB) {
-        counterB = counterB;
+    public static void setCounterB(int _counterB) {
+        counterB = _counterB;
     }
 
     public static int getCounterC() {
         return counterC;
     }
 
-    public static void setCounterC(int counterC) {
-        counterC = counterC;
+    public static void setCounterC(int _counterC) {
+        counterC = _counterC;
     }
 
     public static Time getCounterD() {
         return counterD;
     }
 
-    public static void setCounterD(Time counterD) {
-        counterD = counterD;
+    public static void setCounterD(Time _counterD) {
+        counterD = _counterD;
+    }
+
+    public static void setChargingReply(ChargingReply _chargingReply) {
+        ChargingReply = _chargingReply;
     }
 }
 

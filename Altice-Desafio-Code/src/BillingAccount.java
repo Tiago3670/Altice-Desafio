@@ -9,8 +9,6 @@ public class BillingAccount {
     private static int counterB;
     private static int counterC;
     private static Time counterD;
-    private static String tarifarioServicoA;
-    private static String tarifarioServicoB;
 
 
     public static String getMsisdn() {
@@ -94,24 +92,26 @@ public class BillingAccount {
     public static int getCounterB() {
         return counterB;
     }
+    public static void setCounterB() {
+         counterB=counterB+1;
+         CDR.setCounterB(counterB);
+
+    }
+
     public static void setCounterD(Time _time){
         counterD=_time;
+        CDR.setCounterD(counterD);
     }
     public static int getCounterC() {
         return counterC;
     }
     public static void setCounterC() {
          counterC=counterC+1;
+        CDR.setCounterC(counterC);
+
     }
     public static Time getCounterD() {
         return counterD;
     }
 
-    public String getTarifarioServicoA() {
-        return tarifarioServicoA;
-    }
-
-    public String getTarifarioServicoB() {
-        return tarifarioServicoB;
-    }
 }

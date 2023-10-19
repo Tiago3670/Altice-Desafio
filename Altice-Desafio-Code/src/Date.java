@@ -12,7 +12,7 @@ public class Date {
         calendar.setTimeInMillis(request.getTimeStamp());
         if (dayOfWeek >= Calendar.MONDAY && dayOfWeek <= Calendar.FRIDAY) {
 
-            return true;  //dia da semana
+            return false;  //dia da semana
         } else {
             return true;  //fim de semana
         }
