@@ -1,10 +1,8 @@
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.UUID;
+import java.sql.Time;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -86,7 +84,7 @@ public class Tests {
         assertEquals(9.95, BillingAccount.getBucketA()/100, 0.001);
     }
     @Test
-    public void requestServiceARoamingTrueBucketC()    //pedido 5 minutos sem roaming para o BucketC, o valor a pagar deverá ser 10€ logo o BucketC deverá ficar com 5
+    public void requestServiceARoamingTrueBucketC()  //pedido 5 minutos com roaming para o BucketC, o valor a pagar deverá ser 10€ logo o BucketC deverá ficar com 5
     {
         BillingAccount.addBucketA(10);
         BillingAccount.addBucketB(20);
@@ -97,7 +95,7 @@ public class Tests {
         assertEquals(5.00, BillingAccount.getBucketC()/100, 0.001);
     }
     @Test
-    public void CDRHasUpdated()    //verificar se MSISDN do request está no CDR
+    public void CDRHasUpdated()   //verificar se MSISDN do request está no CDR
     {
         BillingAccount.addBucketA(10);
         BillingAccount.addBucketB(20);
@@ -122,7 +120,7 @@ public class Tests {
         assertEquals("CreditLimitReached",reply.getResult());
     }
     @Test
-    public void consultarRequest()    //conultar o uso e custos associados a um MSISDN
+    public void consultarRequests()    //conultar o uso e custos associados a um MSISDN
     {
         BillingAccount.addBucketA(10);
         BillingAccount.addBucketB(20);
@@ -136,4 +134,107 @@ public class Tests {
         replyList=Central.getAllRequests();
         assertEquals(2,replyList.size());
     }
+
+    @Test
+    public void RequestServiceAIsWeekendRoamingFalse()    //requst para o serviço A com um Timestamp  de sabado neste caso tem de ativar o Alpha2
+    {
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+        long timestamp = calendar.getTimeInMillis();
+
+        BillingAccount.addBucketA(10);
+        BillingAccount.addBucketB(20);
+        BillingAccount.addBucketC(15);
+
+        ChargingReply reply;
+
+
+        ChargingRequest request = new ChargingRequest(UUID.randomUUID(), timestamp, ServiceType.A, false, "123", Integer.valueOf(15));
+        reply = Central.setRequest(request);
+        assertEquals("Alpha2",reply.getTariff());
+    }
+    @Test
+    public void RequestServiceAIsWeekendRoamingTrue()    //requst para o serviço A com um Timestamp  de sabado neste caso tem de ativar o Alpha3
+    {
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+        long timestamp = calendar.getTimeInMillis();
+        calendar.set(Calendar.HOUR, 5);
+        BillingAccount.addBucketA(10);
+        BillingAccount.addBucketB(20);
+        BillingAccount.addBucketC(15);
+
+        ChargingReply reply;
+
+
+        ChargingRequest request = new ChargingRequest(UUID.randomUUID(), timestamp, ServiceType.A, true, "123", Integer.valueOf(15));
+        reply = Central.setRequest(request);
+        assertEquals("Alpha3",reply.getTariff());
+    }
+
+    @Test
+    public void RequestServiceBIsWeekendRoamingFalseIsDay()    //requst para o serviço B com um Timestamp  de sabado  ao meio dia neste caso tem de ativar o Beta2
+    {
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
+        long timestamp = calendar.getTimeInMillis();
+
+        BillingAccount.addBucketA(10);
+        BillingAccount.addBucketB(20);
+        BillingAccount.addBucketC(15);
+
+        ChargingReply reply;
+
+
+        ChargingRequest request = new ChargingRequest(UUID.randomUUID(), timestamp, ServiceType.B, false, "123", Integer.valueOf(15));
+        reply = Central.setRequest(request);
+        assertEquals("Beta2",reply.getTariff());
+    }
+    @Test
+    public void RequestServiceBIsWeekendRoamingFalseIsNight()   //requst para o serviço B com um Timestamp  de sabado  as 22H neste caso tem de ativar o Beta1
+    {
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+        calendar.set(Calendar.HOUR_OF_DAY, 22);
+        long timestamp = calendar.getTimeInMillis();
+
+        BillingAccount.addBucketA(10);
+        BillingAccount.addBucketB(20);
+        BillingAccount.addBucketC(15);
+
+        ChargingReply reply;
+
+
+        ChargingRequest request = new ChargingRequest(UUID.randomUUID(), timestamp, ServiceType.B, false, "123", Integer.valueOf(15));
+        reply = Central.setRequest(request);
+        assertEquals("Beta1",reply.getTariff());
+    }
+    @Test
+    public void RequestServiceBIsWeekendRoamingTrue()    //requst para o serviço B com um Timestamp  de sabado ao meio dia e com roaming  neste caso tem de ativar o Beta3
+    {
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
+
+
+        long timestamp = calendar.getTimeInMillis();
+
+        BillingAccount.addBucketA(10);
+        BillingAccount.addBucketB(20);
+        BillingAccount.addBucketC(15);
+
+        ChargingReply reply;
+
+
+        ChargingRequest request = new ChargingRequest(UUID.randomUUID(), timestamp, ServiceType.B, true, "123", Integer.valueOf(15));
+        reply = Central.setRequest(request);
+        assertEquals("Beta3",reply.getTariff());
+    }
+
 }

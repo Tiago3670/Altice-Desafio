@@ -8,8 +8,9 @@ public class Date {
     public static Boolean isWeekend(ChargingRequest request)
     {
         Calendar calendar = Calendar.getInstance();
-        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         calendar.setTimeInMillis(request.getTimeStamp());
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
         if (dayOfWeek >= Calendar.MONDAY && dayOfWeek <= Calendar.FRIDAY) {
 
             return false;  //dia da semana
@@ -20,10 +21,13 @@ public class Date {
     public static Boolean isNight(ChargingRequest request)
     {
         Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR);
         calendar.setTimeInMillis(request.getTimeStamp());
+
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+
         System.out.println("hora:"+hour);
-        if (hour >= 8 || hour < 6) {
+
+        if (hour >= 20 || hour < 6) {
 
             return true; //se for noite
         } else {

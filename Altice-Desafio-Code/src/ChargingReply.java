@@ -7,7 +7,7 @@ public class ChargingReply {
     private String msisdn;
     private double custo;
     private long timeStamp; // data da realização da requisção
-
+    private String tariff;
 
     public ChargingReply(UUID requestId, String result, double gsu,double custo, String msisdn,long timeStamp) {
         this.requestId = requestId;
@@ -20,7 +20,6 @@ public class ChargingReply {
     public long getTimeStamp() {
         return timeStamp;
     }
-
     public String getMsisdn()
     {
         return msisdn;
@@ -28,11 +27,9 @@ public class ChargingReply {
     public UUID getRequestId() {
         return requestId;
     }
-
     public String getResult() {
         return result;
     }
-
     public double getGSU() {
         return gsu;
     }
@@ -40,4 +37,11 @@ public class ChargingReply {
         return custo;
     }
 
+    public void setTariff(String _tariff) {
+        this.tariff = _tariff;
+    }
+
+    public String getTariff() {
+        return tariff;
+    }
 }

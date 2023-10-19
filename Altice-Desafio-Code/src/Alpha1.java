@@ -89,7 +89,7 @@ public class Alpha1 {
 
 
             ChargingReply reply=new ChargingReply(request.getRequestId(),result, gsu,custoTotal/100, request.getMsisdn(), request.getTimeStamp());
-
+            reply.setTariff("Alpha1");
         return reply;
     }
 

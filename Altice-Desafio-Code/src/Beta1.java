@@ -90,6 +90,7 @@ public class Beta1 {
 
 
         ChargingReply reply=new ChargingReply(request.getRequestId(),result, gsu,custoTotal/100, request.getMsisdn(), request.getTimeStamp());
+        reply.setTariff("Beta1");
 
         return reply;
     }
